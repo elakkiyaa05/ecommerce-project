@@ -21,10 +21,6 @@ document.getElementById("checkout-total").innerText =
   "Total: ₹" + total;
 
 function placeOrder() {
-
-  alert("Order placed successfully!");
-
   localStorage.removeItem("cart");
-
-  window.location.href = "index.html";
+  window.location.href = "success.html";
 }
