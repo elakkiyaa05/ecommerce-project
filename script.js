@@ -1,25 +1,33 @@
 // PRODUCTS
-const products = [
-  {
-    id: 1,
-    name: "Running Shoes",
-    price: 1499,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    price: 2999,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30"
-  },
-  {
-    id: 3,
-    name: "Headphones",
-    price: 1999,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
-  }
-];
+// const products = [
+//  {
+//    id: 1,
+//     name: "Running Shoes",
+//     price: 1499,
+//     image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+//   },
+//   {
+//     id: 2,
+//     name: "Smart Watch",
+//     price: 2999,
+//     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30"
+//   },
+//   {
+//     id: 3,
+//     name: "Headphones",
+//     price: 1999,
+//     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+//   }
+// ];
+let products = [];
 
+fetch("http://localhost:3000/products")
+  .then(res => res.json())
+  .then(data => {
+    products = data;
+    displayProducts();
+  })
+  .catch(err => console.log("Fetch error:", err));
 // CART (LOAD FROM LOCALSTORAGE)
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let quantities = {};
@@ -29,22 +37,22 @@ function saveCart() {
 
 // DISPLAY PRODUCTS
 function displayProducts() {
-  const productList = document.getElementById("product-list");
-  productList.innerHTML = "";
+  const container = document.getElementById("product-list");
 
-  products.forEach(product => {
-    productList.innerHTML += `
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    container.innerHTML += `
       <div class="product-card">
-        <img src="${product.image}" />
-        <h2>${product.name}</h2>
-        <p>₹${product.price}</p>
-        <div class="qty-buttons">
-  <button onclick="decreaseQty(${product.id})">-</button>
+        <img src="${p.image}" width="150" />
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
 
-  <span id="qty-${product.id}">0</span>
+        <button onclick="addToCart(${p.id})">+</button>
 
-  <button onclick="addToCart(${product.id})">+</button>
-</div>
+        <span id="qty-${p.id}">${quantities[p.id] || 0}</span>
+
+        <button onclick="decreaseQty(${p.id})">-</button>
       </div>
     `;
   });
@@ -171,4 +179,18 @@ function decreaseQty(id) {
   }
 
   document.getElementById("qty-" + id).innerText = quantities[id];
+
+  // also update cart if needed
+  const item = cart.find(p => p.id === id);
+
+  if (item) {
+    item.quantity--;
+
+    if (item.quantity <= 0) {
+      cart = cart.filter(p => p.id !== id);
+    }
+
+    updateStorage();
+    updateCartUI();
+  }
 }
