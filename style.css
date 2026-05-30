@@ -236,16 +236,18 @@ button:hover{
   width: 300px;
   margin: 100px auto;
   padding: 20px;
-
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   text-align: center;
   border-radius: 10px;
+  background: white;
 }
 
+/* Inputs */
 .login-container input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
+  box-sizing: border-box;
 }
 
 .login-container button {
@@ -403,4 +405,118 @@ body {
 
 .success-container button:hover {
   background: darkgreen;
+}
+.password-box {
+  position: relative;
+  width: 250px;
+}
+
+.password-box input {
+  width: 100%;
+  padding-right: 35px;
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}
+.password-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+/* password input inside row */
+.password-row input {
+  width: 85%;
+}
+
+/* eye symbol */
+.eye-symbol {
+  cursor: pointer;
+  margin-left: -35px;  /* pulls icon inside right side */
+  z-index: 2;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+}
+
+/* THIS is the key fix */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.signup-form {
+  width: 350px;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-top: 10px;
+}
+
+.form-row {
+  margin-bottom: 15px;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.signup-form button {
+  width: 100%;
+  padding: 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-form {
+    width: 90%;
+  }
+}
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px; /* space for eye icon */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
 }
